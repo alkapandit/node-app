@@ -11,6 +11,7 @@
   "author": "alka pandit",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mysql2": "^3.16.1",
     "mysql2-promise": "^0.1.4"

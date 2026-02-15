@@ -1,21 +1,31 @@
 import "dotenv/config";
 import app from "./app";
-import pool from "./common/config/db";
-import { env } from "./common/config/env";
+import prisma from "./common/config/prisma";
 
-const PORT = env.port;
+const PORT = process.env.PORT;
 
 // Server start
 const startServer = async () => {
   try {
-    await pool.query("SELECT 1");
-    console.log("✅ Database Connected");
+    // Optional: simple Prisma health check
+    await prisma.$connect();
+    console.log("✅ Database Connected (Prisma)");
+
+    // // Example DB operation (remove later if not needed)
+    // const user = await prisma.user.create({
+    //   data: {
+    //     email: "pankajbarman000@gmail.com",
+    //     name: "Pankaj Barman",
+    //   },
+    // });
+
+    // console.log("👤 User created:", user);
 
     app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
     });
   } catch (error) {
-    console.error("❌ Database connection failed", error);
+    console.error("❌ Server startup failed", error);
     process.exit(1);
   }
 };
